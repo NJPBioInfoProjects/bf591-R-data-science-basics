@@ -27,7 +27,13 @@ read_data <- function(intensity_data, delimiter) {
 #'
 #' @examples
 calculate_variance_explained <- function(pca_results) {
-    return(NULL)
+  #extract st deviations and square to get variances
+  variances <- pca_results$sdev^2
+  
+  #calculate the proportion of variance explained by each PC
+  variance_proportion <- variances / sum(variances)
+  
+  return(variance_proportion)
 }
 
 #' Define a function that takes in the variance values and the PCA results to

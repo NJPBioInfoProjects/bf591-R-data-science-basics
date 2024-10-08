@@ -13,7 +13,9 @@ library('RColorBrewer')
 #'
 #' @examples
 read_data <- function(intensity_data, delimiter) {
-    return(NULL)
+  data <- read_delim(file = intensity_data, delim = delimiter)  
+  
+  return(data)
 }
 
 #' Define a function to calculate the proportion of variance explained by each PC

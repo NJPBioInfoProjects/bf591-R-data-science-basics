@@ -13,7 +13,7 @@ library('RColorBrewer')
 #'
 #' @examples
 read_data <- function(intensity_data, delimiter) {
-  data <- read_delim(file = intensity_data, delim = delimiter)  
+  data <- read.table(file = intensity_data, sep = delimiter, header = TRUE)  
   
   return(data)
 }

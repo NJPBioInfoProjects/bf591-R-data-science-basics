@@ -51,7 +51,22 @@ calculate_variance_explained <- function(pca_results) {
 #' @export
 #' @examples 
 make_variance_tibble <- function(pca_ve, pca_results) {
-    return(NULL)
+  
+  #create PCs to use as factors for tibble
+  len_components <- length(pca_ve)
+  p_components <- paste0("PC", 1:len_components)
+  
+  #cumulative sum of variance explained
+  cumulative_variance <- cumsum(pca_ve)
+  
+  #create tibble, use PCs as factors
+  variance_tibble <- tibble(
+    variance_explained = pca_ve,
+    principal_components = factor(p_components),
+    cumulative = cumulative_variance
+  )
+  
+  return(variance_tibble)
 }
 
 

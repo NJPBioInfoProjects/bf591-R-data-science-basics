@@ -122,7 +122,7 @@ captions blank.
 ```{r code block to create descriptive captions}
 caption_4 <- 'Descriptive Caption for part 4 here'
 caption_5 <- 'Descriptive Caption for part 5 here'
-caption_8 <- 'Descriptive Caption for part 8 here'
+caption_8 <- 'Normalized intensity values for significantly differentiated probes in gene expression analysis'
 ```
 
 ## 4. Plot the variance explained and cumulative variance for the PCs
@@ -141,6 +141,22 @@ numeric ordering.
 
 ```{r code block to plot variance explained and cumulative variance explained, fig.cap = caption_4}
 #Create a ggplot2 with the plot described above, refer to the reference report
+library('forcats')
+
+ls_cols <- c('Cumulative'='black')
+bar_cols <-c('Variance Explained'='light blue')
+  variance_tibble %>%
+    #corrects the order of PCs on x-axis
+    mutate(principal_components = fct_reorder(principal_components, -variance_explained)) %>%
+    ggplot() + 
+    geom_bar(aes(x=principal_components, y=variance_explained, fill='Variance Explained'), stat='identity', color='black') + 
+    geom_line(aes(x=principal_components, y=cumulative, group=1, color='Cumulative')) +
+    geom_point(aes(x=principal_components, y=cumulative, group=1, color='Cumulative')) +
+    scale_colour_manual(name="Cumulative",values=ls_cols) +
+    scale_fill_manual(name="Variance Explained",values=bar_cols) +
+    labs(x='PC', y='% variance') +
+    theme_classic(base_size=8) + 
+    theme(axis.text.x=element_text(angle=90,hjust=1))
 
 ```
 
@@ -164,6 +180,8 @@ variance, visually interpreting these plots requires care as the scale of the
 
 ```{r code block to make a biplot of PC1 and PC2, message = FALSE, fig.cap = caption_5}
 make_biplot('data/proj_metadata.csv', pca_results)
+
+
 ```
 
 ## 6. Filter the differential_expression_results.csv for significant probes

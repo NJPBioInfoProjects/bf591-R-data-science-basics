@@ -84,29 +84,21 @@ make_variance_tibble <- function(pca_ve, pca_results) {
 #' @examples
 make_biplot <- function(metadata_path, pca_results) {
     
-  # Read the metadata CSV file
-  metadata <- read_csv(metadata_path, col_names = FALSE)
+  metadata <- read_csv(metadata_path)
   
-  # Extract the first two principal components from pca_results
-  # pca_scores <- as.data.frame(pca_results$x[, 1:2])  # PC1 and PC2
-  # colnames(pca_scores) <- c("PC1", "PC2")
-  # 
-  # # Ensure the metadata has the same number of rows as the PCA scores
-  # if (nrow(metadata) != nrow(pca_scores)) {
-  #   stop("The number of rows in the metadata and PCA results do not match.")
-  # }
-  # 
-  # # Combine the PCA scores with the metadata
-  # pca_data <- cbind(pca_scores, metadata)
-  # 
-  # # Plot PC1 vs PC2 and color by the classification column (SixSubTypesClassification)
-  # biplot <- ggplot(pca_data, aes(x = PC1, y = PC2, color = SixSubTypesClassification)) +
-  #   geom_point(size = 3) +
-  #   labs(title = "Biplot of PC1 and PC2", x = "PC1", y = "PC2") +
-  #   theme_minimal()
-  # 
-  # Display the plot
-  return(NULL)
+  pca_scores <- as_tibble(pca_results$x[, 1:2])  # PC1 and PC2
+  pca_scores <- pca_scores %>%
+    mutate(sample = rownames(pca_results$x))
+
+  names(pca_scores) [names(pca_scores) == 'sample'] <- 'geo_accession'
+  
+  merged_data <- inner_join(pca_scores, metadata, by = 'geo_accession')
+
+  biplot <- merged_data %>% ggplot() +
+    geom_point(aes(x = PC1, y = PC2, color = SixSubtypesClassification)) +
+    theme_minimal()
+
+  return(biplot)
 }
 
   

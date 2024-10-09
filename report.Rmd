@@ -120,8 +120,8 @@ figures. Until you've completed all the parts, you may safely leave these
 captions blank.
 
 ```{r code block to create descriptive captions}
-caption_4 <- 'Descriptive Caption for part 4 here'
-caption_5 <- 'Descriptive Caption for part 5 here'
+caption_4 <- 'Variance explained and cumulative variance mapped across PCs'
+caption_5 <- 'Biplot of first two principal components colorized by subtype'
 caption_8 <- 'Normalized intensity values for significantly differentiated probes in gene expression analysis'
 ```
 

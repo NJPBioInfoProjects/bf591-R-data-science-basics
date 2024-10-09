@@ -97,7 +97,7 @@ make_biplot <- function(metadata_path, pca_results) {
   biplot <- merged_data %>% ggplot() +
     geom_point(aes(x = PC1, y = PC2, color = SixSubtypesClassification)) +
     theme_minimal()
-
+  
   return(biplot)
 }
 
@@ -168,6 +168,5 @@ plot_heatmap <- function(de_intensity, num_colors, palette) {
   # Plot the heatmap using the intensity matrix and the specified color palette
   heatmap(de_intensity, col = color_palette, scale = "row")
   
-  mtext(caption_8, side = 1, line = 5, outer = FALSE, cex = 1.2)
 }
 

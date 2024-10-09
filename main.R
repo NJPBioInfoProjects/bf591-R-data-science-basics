@@ -145,7 +145,14 @@ list_significant_probes <- function(diff_exp_tibble, fdr_threshold) {
 #'
 #' @examples
 return_de_intensity <- function(intensity, sig_ids_list) {
-  return(NULL)
+  # Subset the intensity matrix/data frame by matching the row names (probe IDs) with sig_ids_list
+  de_intensity <- intensity[rownames(intensity) %in% sig_ids_list, ]
+  
+  # Convert the result to a matrix
+  de_intensity_matrix <- as.matrix(de_intensity)
+  
+  # Return the subsetted matrix
+  return(de_intensity_matrix)
 }
 
 #' Define a function that takes the intensity values for significant probes and
@@ -163,6 +170,12 @@ return_de_intensity <- function(intensity, sig_ids_list) {
 #'
 #' @examples
 plot_heatmap <- function(de_intensity, num_colors, palette) {
-    return(NULL)
+  # Generate the color palette using RColorBrewer
+  color_palette <- brewer.pal(num_colors, palette)
+  
+  # Plot the heatmap using the intensity matrix and the specified color palette
+  heatmap(de_intensity, col = color_palette, scale = "row")
+  
+  mtext(caption_8, side = 1, line = 5, outer = FALSE, cex = 1.2)
 }
 

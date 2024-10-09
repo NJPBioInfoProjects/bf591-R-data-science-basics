@@ -82,9 +82,34 @@ make_variance_tibble <- function(pca_ve, pca_results) {
 #' @export
 #'
 #' @examples
-make_biplot <- function(metadata, pca_results) {
-    return(NULL)
+make_biplot <- function(metadata_path, pca_results) {
+    
+  # Read the metadata CSV file
+  metadata <- read_csv(metadata_path, col_names = FALSE)
+  
+  # Extract the first two principal components from pca_results
+  # pca_scores <- as.data.frame(pca_results$x[, 1:2])  # PC1 and PC2
+  # colnames(pca_scores) <- c("PC1", "PC2")
+  # 
+  # # Ensure the metadata has the same number of rows as the PCA scores
+  # if (nrow(metadata) != nrow(pca_scores)) {
+  #   stop("The number of rows in the metadata and PCA results do not match.")
+  # }
+  # 
+  # # Combine the PCA scores with the metadata
+  # pca_data <- cbind(pca_scores, metadata)
+  # 
+  # # Plot PC1 vs PC2 and color by the classification column (SixSubTypesClassification)
+  # biplot <- ggplot(pca_data, aes(x = PC1, y = PC2, color = SixSubTypesClassification)) +
+  #   geom_point(size = 3) +
+  #   labs(title = "Biplot of PC1 and PC2", x = "PC1", y = "PC2") +
+  #   theme_minimal()
+  # 
+  # Display the plot
+  return(NULL)
 }
+
+  
 
 #' Define a function to return a list of probeids filtered by signifiance
 #'
@@ -97,7 +122,13 @@ make_biplot <- function(metadata, pca_results) {
 #'
 #' @examples
 list_significant_probes <- function(diff_exp_tibble, fdr_threshold) {
-    return(NULL)
+  # Filter the tibble for rows where padj is less than the FDR threshold
+  significant_probes <- diff_exp_tibble %>%
+    filter(padj < fdr_threshold) %>%
+    select(probeid) # Select only the probeid column
+  
+  # Return the list of significant probe IDs
+  return(significant_probes$probeid)
 }
 
 #' Define a function that uses the list of significant probeids to return a
@@ -114,7 +145,7 @@ list_significant_probes <- function(diff_exp_tibble, fdr_threshold) {
 #'
 #' @examples
 return_de_intensity <- function(intensity, sig_ids_list) {
-    return(NULL)
+  return(NULL)
 }
 
 #' Define a function that takes the intensity values for significant probes and
